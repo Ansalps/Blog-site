@@ -16,7 +16,8 @@ export default async function PostesPage() {
             title:true,
             slug:true,
         },
-        
+        take:1,
+        skip:1
     })
     const postsCount=await prisma.post.count();
     return (
