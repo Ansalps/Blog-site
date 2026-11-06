@@ -10,7 +10,7 @@ model User{
   id String @id @default(cuid())
   email String @unique
   hashedPassword String
-  posts Post?
+  posts Post[]
 }
 model Post {
   id        String   @id @default(cuid())
@@ -18,10 +18,11 @@ model Post {
   slug      String @unique
   content   String
   Published Boolean? @default(false)
+  author User @relation(fields: [authorId],references: [id])
+  authorId String 
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
-  author User @relation(fields: [authorId],references: [id])
-  authorId String @unique
+  
 
   @@index(slug)
 }
