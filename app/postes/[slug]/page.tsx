@@ -1,14 +1,14 @@
 import {  Suspense } from "react";
 import { prisma } from "@/app/lib/prisma";
-// import { unstable_cache as cache} from "next/cache";
+import { unstable_cache as cache} from "next/cache";
 
-// const getCachedPost = cache((slug)=>{
-//     return prisma.post.findUnique({
-//         where:{
-//             slug,
-//         },
-//     });
-// });
+const getCachedPost = cache((slug)=>{
+    return prisma.post.findUnique({
+        where:{
+            slug,
+        },
+    });
+});
 
 // Tell Next.js which slugs exist so it can pre-render or cache them safely
 export async function generateStaticParams() {
@@ -25,9 +25,7 @@ export async function generateStaticParams() {
 async function PostContent({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const post = await prisma.post.findUnique({
-    where: { slug },
-  });
+  const post = await getCachedPost(slug);
 
   return (
     <>
