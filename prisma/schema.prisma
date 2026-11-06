@@ -10,7 +10,7 @@ model User{
   id String @id @default(cuid())
   email String @unique
   hashedPassword String
-  posts Post[]
+  posts Post?
 }
 model Post {
   id        String   @id @default(cuid())
@@ -20,8 +20,8 @@ model Post {
   Published Boolean? @default(false)
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
-  author User[] 
-  
+  author User @relation(fields: [authorId],references: [id])
+  authorId String @unique
 
   @@index(slug)
 }
