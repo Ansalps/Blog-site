@@ -6,6 +6,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model User{
+  id String @id @default(cuid())
+  email String @unique
+  hashedPassword String
+  posts Post[]
+}
 model Post {
   id        String   @id @default(cuid())
   title     String
@@ -14,4 +20,8 @@ model Post {
   Published Boolean? @default(false)
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
+  author User @relation(fields: [authorId],references: [id])
+  authorId String
+
+  @@index(slug)
 }
