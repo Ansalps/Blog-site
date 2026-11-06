@@ -20,8 +20,8 @@ model Post {
   Published Boolean? @default(false)
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
-  author User @relation(fields: [authorId],references: [id])
-  authorId String
+  author User[] 
+  
 
   @@index(slug)
 }
