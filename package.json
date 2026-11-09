@@ -10,9 +10,9 @@
     "postinstall": "prisma generate && prisma migrate deploy"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.10.1",
+    "@prisma/adapter-better-sqlite3": "^7.10.1",
+    "better-sqlite3": "^13.0.3",
     "next": "16.4.4",
-    "pg": "^8.23.1",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
@@ -21,7 +21,6 @@
     "@tailwindcss/turbopack": "^4",
     "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^20",
-    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

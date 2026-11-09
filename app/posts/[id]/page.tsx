@@ -1,3 +1,5 @@
+import { prisma } from "@/app/lib/prisma";
+import { notFound } from "next/navigation";
 
 
 export const instant=false;
@@ -5,10 +7,18 @@ type PostPageProps={
     params:Promise<{id:string}>
  }
 export default async function PostPage({params}:PostPageProps){
-    "use cache"
     const {id}=await params
-    const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    const post = await response.json();
+    // const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    // const post = await response.json();
+    const post=await prisma.post.findUnique({
+        where:{
+            id
+        }
+    })
+
+    if (!post){
+        notFound();
+    }
 
     return (
         <article className="space-y-6">
@@ -16,7 +26,7 @@ export default async function PostPage({params}:PostPageProps){
                 <h1 className="text-center text-4xl font-semibold text-zinc-950 sm:text-5xl">
                     {post.title.charAt(0).toUpperCase()+post.title.slice(1)}
                 </h1>
-                <p className="text-lg leading-8 text-zinc-700">{post.body}</p>
+                <p className="text-lg leading-8 text-zinc-700">{post.content}</p>
             </div>
         </article>
     )
