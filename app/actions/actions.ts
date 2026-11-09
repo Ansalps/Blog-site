@@ -5,6 +5,7 @@ import { prisma } from "../lib/prisma";
 import { Prisma } from "@prisma/client";
 
 export async function createPost(formData:FormData) {
+   
     try{
         await prisma.post.create({
             data:{
@@ -21,13 +22,14 @@ export async function createPost(formData:FormData) {
             },
         });
     } catch(error){
+        console.log(error)
         if (error instanceof Prisma.PrismaClientKnownRequestError){
             if (error.code==="P2002"){
                 console.log(
                     "There is a unique constraint violation, a new user cannot be created with this email"
                 );
             }
-        }
+        } 
     }
     
     revalidatePath("/postes");
