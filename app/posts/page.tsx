@@ -1,11 +1,21 @@
+// import { cookies } from "next/headers";
+import RecentlyViewedPosts from "@/components/recently-viewed-posts";
+
 import Link from "next/link";
-// import { prisma } from "../lib/prisma";
-export const instant=false
-export default async function PostPage(){
+import { Suspense } from "react";
+// import { getPosts } from "../lib/utils";
+import { prisma } from "../lib/prisma";
+import { createPost } from "@/actions/actions";
+import UpvoteBtn from "@/components/upvote-btn";
+//export const instant=false
+
+
+export default async function PostsPage(){
     
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-    const posts = await response.json() ;
-    //const posts=await prisma.post.findMany();
+   // const posts=await getPosts()
+    const posts=await prisma.post.findMany();
+
+    
 
     // const posts = await getPosts()
     // console.log(posts)
@@ -32,10 +42,41 @@ export default async function PostPage(){
                                 >
                                     {post.title.charAt(0).toUpperCase()+post.title.slice(1)}
                                 </Link>
+                                <UpvoteBtn postId={post.id} votes={post.votes}/>
                             </div>
                         </li>
                     ))}
                 </ul>
+
+                <Suspense fallback={<p>Loading recently viewed posts...</p>}>
+                    <RecentlyViewedPosts />
+                </Suspense>
+                
+            </section>
+            <section className="space-y-4 border-t border-zinc-200 pt-6">
+                    <h2 className="text-xl font-semibold text-zinc-950">New Post</h2>
+                    <form action={createPost} className="space-y-4">
+                        <label className="block space-y-2">
+                            <span className="text-sm font-medium text-zinc-700">Title</span>
+                            <input
+                                name="title"
+                                type="text"
+                                required
+                                className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 text-zinc-950
+                                transition-colors focus:border-zinc-500"
+                            />
+                        </label>
+                        <label className="block space-y-2">
+                            <span className="text-sm font-medium text-zinc-700">Content</span>
+                            <textarea
+                                name="content"
+                                required
+                                className="h-10 w-full rounded-md border border-zinc-300 bg-zinc-50 px-3 text-zinc-950
+                                transition-colors focus:border-zinc-500"
+                            />
+                        </label>
+                        <button>Create</button>
+                    </form>
             </section>
         </div>
     );
