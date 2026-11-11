@@ -1,9 +1,9 @@
 // import { cookies } from "next/headers";
-import RecentlyViewedPosts from "@/components/recently-viewed-posts";
+// import RecentlyViewedPosts from "@/components/recently-viewed-posts";
 
 import Link from "next/link";
-import { Suspense } from "react";
-// import { getPosts } from "../lib/utils";
+// import { Suspense } from "react";
+//import { getPosts } from "../lib/utils";
 import { prisma } from "../lib/prisma";
 import { createPost } from "@/actions/actions";
 import UpvoteBtn from "@/components/upvote-btn";
@@ -12,10 +12,10 @@ import UpvoteBtn from "@/components/upvote-btn";
 
 export default async function PostsPage(){
     
-   // const posts=await getPosts()
-    const posts=await prisma.post.findMany();
-
-    
+    //const posts=await getPosts()
+    // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    // const posts=await response.json()
+   const posts=await prisma.post.findMany();
 
     // const posts = await getPosts()
     // console.log(posts)
@@ -48,9 +48,9 @@ export default async function PostsPage(){
                     ))}
                 </ul>
 
-                <Suspense fallback={<p>Loading recently viewed posts...</p>}>
+                {/* <Suspense fallback={<p>Loading recently viewed posts...</p>}>
                     <RecentlyViewedPosts />
-                </Suspense>
+                </Suspense> */}
                 
             </section>
             <section className="space-y-4 border-t border-zinc-200 pt-6">

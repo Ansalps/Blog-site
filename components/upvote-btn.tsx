@@ -1,5 +1,6 @@
 "use client"
 import { upvotePost } from "@/actions/actions"
+import Icon from "./icon";
 // import { useState } from "react"
 
 type UpvoteBtnProps={
@@ -18,6 +19,8 @@ export default function UpvoteBtn({postId,votes}:UpvoteBtnProps){
             text-sm font-semibold text-zinc-800 transition-colors"
         >
             Upvote {votes}
+
+            <Icon />
         </button>
     )
 }
